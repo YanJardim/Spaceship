@@ -1,20 +1,33 @@
 abstract class GameObject{
   protected PVector position;
+  protected PVector direction;
+  protected PVector velocity;
   protected PVector rotation;
   protected PVector scale;
-  protected color color;
+  protected float speed;
+  protected color c;
   
   public GameObject(PVector position, PVector rotation){
     this.position = position;
     this.rotation = rotation;
+    this.velocity = new PVector(0, 0);
+    this.direction = new PVector(0, 0);
   }
   public GameObject(PVector position, PVector rotation, PVector scale){
     this(position, rotation);
     this.scale = scale;
   }
+  public GameObject(PVector position, PVector rotation, PVector scale, float speed){
+    this(position, rotation, scale);
+    this.speed = speed;
+  }
   
-  public void draw(){}
-  public void update(){}
+  public void draw(){
+    update();
+  }
+  public void update(){
+    position.add(direction.add(velocity));
+  }
   
   public PVector getPosition(){
      return position; 
@@ -29,6 +42,19 @@ abstract class GameObject{
       this.rotation = rotation;
   }
   
+  public PVector getVelocity(){
+     return velocity; 
+  }
+  public void setVelocity(PVector velocity){
+      this.velocity = velocity;
+  }
+  public PVector getDirection(){
+     return direction; 
+  }
+  public void setDiretion(PVector direction){
+      this.direction = direction;
+  }
+  
   public PVector getScale(){
      return scale; 
   }
@@ -37,10 +63,10 @@ abstract class GameObject{
   }
   
    public color getColor(){
-     return color; 
+     return c; 
   }
-  public void setScale(color color){
-      this.color = color;
+  public void setScale(color c){
+      this.c = c;
   }
   
   
