@@ -1,7 +1,7 @@
 abstract class GameObject{
   protected PVector position;
   protected PVector direction;
-  protected PVector velocity;
+  protected PVector propulsion;
   protected PVector rotation;
   protected PVector scale;
   protected float speed;
@@ -10,7 +10,7 @@ abstract class GameObject{
   public GameObject(PVector position, PVector rotation){
     this.position = position;
     this.rotation = rotation;
-    this.velocity = new PVector(0, 0);
+    this.propulsion = new PVector(0, 0);
     this.direction = new PVector(0, 0);
   }
   public GameObject(PVector position, PVector rotation, PVector scale){
@@ -26,7 +26,8 @@ abstract class GameObject{
     update();
   }
   public void update(){
-    position.add(direction.add(velocity));
+    
+    position.add(direction.add(propulsion).normalize());
   }
   
   public PVector getPosition(){
@@ -42,11 +43,11 @@ abstract class GameObject{
       this.rotation = rotation;
   }
   
-  public PVector getVelocity(){
-     return velocity; 
+  public PVector getPropulsion(){
+     return propulsion; 
   }
-  public void setVelocity(PVector velocity){
-      this.velocity = velocity;
+  public void setPropulsion(PVector propulsion){
+      this.propulsion = propulsion;
   }
   public PVector getDirection(){
      return direction; 
