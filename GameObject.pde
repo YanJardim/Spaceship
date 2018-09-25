@@ -28,6 +28,7 @@ abstract class GameObject{
   public void update(){
     
     position.add(direction.add(propulsion).normalize());
+    
   }
   
   public PVector getPosition(){
