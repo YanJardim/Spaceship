@@ -3,7 +3,7 @@ public Time time;
 
 void setup(){
     size(800, 800);
-    player = new Player(new PVector(width / 2, height / 2), new PVector(1, 0), 10);
+    player = new Player("naveJogador", new PVector(width / 2, height / 2), new PVector(1, 0), 10);
     time = new Time();
 }
 

@@ -4,6 +4,7 @@ abstract class GameObject{
     protected PVector propulsion;
     protected PVector rotation;
     protected PVector scale;
+    protected PImage image;
     protected float speed;
     protected color c;
   
@@ -20,6 +21,10 @@ abstract class GameObject{
     public GameObject(PVector position, PVector rotation, PVector scale, float speed){
         this(position, rotation, scale);
         this.speed = speed;
+    }
+    public GameObject(String imageName, PVector position, PVector rotation, PVector scale, float speed){
+        this(position, rotation, scale, speed);
+        this.image = loadImage("images/" + imageName + ".png");
     }
 
     public void draw(){
