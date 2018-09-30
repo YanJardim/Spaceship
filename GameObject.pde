@@ -10,6 +10,8 @@ abstract class GameObject{
     protected Rectangle boudingBox;
     protected float speed;
     protected color c;
+    protected float rotAngle;
+	protected float rotSpeed = 5;
   
     public GameObject(PVector position, PVector rotation){
         this.position = position;
@@ -33,12 +35,15 @@ abstract class GameObject{
 
     public void draw(){
         update();
-        drawBoudingBox();
+        //drawBoudingBox();
     }
     public void update(){
         scroll();
-        updateImage();   
+        updateImage();
     }
+    public float getAngle() {
+    	return atan2(-rotation.x, rotation.y);
+  	}
     public void drawImage(){
         if(image == null) return;
         imageMode(CENTER);
@@ -47,6 +52,18 @@ abstract class GameObject{
     public void drawImage(float x, float y){
         imageMode(CENTER);
         image(image, x, y, scale.x, scale.y);
+    }
+
+    public void drawWithRotation(){
+        pushMatrix();
+			translate(position.x , position.y );
+			rotate(getAngle());
+			pushMatrix();
+				rotate(PI / 2);
+				imageMode(CENTER);
+				drawImage(0, 0);
+			popMatrix();
+    	popMatrix();
     }
     public void updateImage(){
         boudingBox.setLocation((int)(position.x - scale.x / 2), (int)(position.y - scale.y / 2));
@@ -60,6 +77,11 @@ abstract class GameObject{
   		position.x = position.x <= -scale.x/2 ? width : position.x >= width ? 0 : position.x; 
   	   	position.y = position.y <= -scale.y/2 ? height : position.y >= height ? 0 : position.y; 
   	}
+
+    public void applyRotation(){
+		rotation.x = cos(rotAngle);
+		rotation.y = sin(rotAngle);
+	}
 
     //GETTERS AND SETTERS
     public PVector getPosition(){

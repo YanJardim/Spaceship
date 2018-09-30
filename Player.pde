@@ -1,52 +1,44 @@
 class Player extends GameObject {
-	private float rotAngle;
-	private float rotSpeed = 5;
-	private boolean isLeft, isRight, isUp, isDown;
+	
+	private boolean isLeft, isRight, isUp, isDown, isSpace;
+	private ArrayList<Bullet> bullets;
+	private boolean canShoot;
+	private float fireRatio, shootTimer;
 
   	public Player(PVector position, PVector rotation, float speed) {
     	super("player", position, rotation, new PVector(40, 40), speed);
 		c = color(255, 255, 255);
 		rotAngle = 0;
+		bullets = new ArrayList<Bullet>();
+		fireRatio = 0.2;
   	}
   	@Override
     public void draw() {
     	super.draw();
-    	stroke(c);
-    	noFill();
-	
-    	pushMatrix();
-			translate(position.x , position.y );
-			rotate(getAngle());
-
-			pushMatrix();
-				rotate(PI / 2);
-				imageMode(CENTER);
-				drawImage(0, 0);
-			popMatrix();
-
-    	popMatrix();
+    	
+		drawBullets();
+		drawWithRotation();
+    	
   	}
-  	public float getAngle() {
-    	PVector rot  = rotation.copy();
-    	return atan2(-rot.x, rot.y);
-  	}
+  	
   	@Override
   	public void update() {
   	  	super.update();
-  	  	applyRotation();
   	  	move();
-  	  	
+		shoot();
+		applyRotation();
   	}
+
+	private void drawPlayer(){
+		
+	}
   	public void limitVel(){
   	    constrain(direction.x, 0, 0.05);
   	    constrain(direction.y, 0, 0.05);
   	}
-	public void applyRotation(){
-		rotation.x = cos(rotAngle);
-		rotation.y = sin(rotAngle);
-	}
+	
   	public void move() {
-	  	position.add(direction.add(propulsion.normalize()).normalize().mult(speed * time.deltatime()));
+	  	position.add(propulsion.normalize().mult(speed * time.deltatime()));
 
 		if (isUp) {
 			propulsion = rotation.copy();
@@ -57,9 +49,22 @@ class Player extends GameObject {
 		if (isRight) {
 			rotAngle += time.deltatime() * rotSpeed;
 		}
-
   	  	//propulsion.mult();
   	}
+
+	public void shoot(){
+		if (isSpace && canShoot) {
+			bullets.add(new Bullet(position.copy(), rotation.copy(), 200, 3));
+			canShoot = false;
+			shootTimer = 0;
+		}
+		else if(!canShoot){
+			shootTimer += time.deltatime();
+			if(shootTimer >= fireRatio){
+				canShoot = true;
+			}
+		}
+	}
 
 	boolean setMove(int key, boolean value) {
 		switch (key) {
@@ -78,10 +83,25 @@ class Player extends GameObject {
 			case 'D':
 				case RIGHT:
 					return isRight = value;
+			case ' ':
+				return isSpace = value;
 	
 			default:
 				return value;
 		}
   	}
+
+	private void drawBullets(){
+		for (int i = 0; i < bullets.size(); i++) {
+			Bullet b = bullets.get(i);
+			if (b.isDead()) {
+				bullets.remove(b);
+				return;
+			}
+			b.update();
+			b.draw();
+		
+		}
+	}
 
 }

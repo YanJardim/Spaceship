@@ -1,6 +1,7 @@
 public class MeteorSpawner {
     private float spawnRatio, timer;
     private ArrayList<Meteor> meteors;
+
     public MeteorSpawner (float spawnRatio) {
         this.spawnRatio = spawnRatio;
         meteors = new ArrayList<Meteor>();
@@ -24,8 +25,9 @@ public class MeteorSpawner {
 
     public void spawnMeteor(){
         PVector pos = getRandomPosition();
-        println("pos: "+pos);
-        meteors.add(new Meteor(pos, new PVector(1, 0), (int)random(60, 100), (int)random(40, 80)));
+        int r = (int)random(1, 4);
+        
+        meteors.add(new Meteor(r, pos, new PVector(1, 0), (int)random(60, 100), (int)random(40, 80)));
     }
 
     public void drawEnemies(){
