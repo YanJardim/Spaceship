@@ -23,7 +23,9 @@ public class MeteorSpawner {
     }
 
     public void spawnMeteor(){
-        meteors.add(new Meteor(new PVector(0, 0), new PVector(1, 0), (int)random(60, 100), (int)random(40, 80)));
+        PVector pos = getRandomPosition();
+        println("pos: "+pos);
+        meteors.add(new Meteor(pos, new PVector(1, 0), (int)random(60, 100), (int)random(40, 80)));
     }
 
     public void drawEnemies(){
@@ -31,5 +33,14 @@ public class MeteorSpawner {
             m.draw();
         }
     }
-
+    public PVector getRandomPosition(){
+        int r = (int)floor(random(0, 4));
+        switch (r) {
+            case 0: return new PVector(random(0, width), 0); 
+            case 1: return new PVector(random(0, width), height);
+            case 2: return new PVector(0, random(0, height)); 
+            case 3: return new PVector(width, random(0, height));
+        }
+        return new PVector(0,0);
+    }
 }
