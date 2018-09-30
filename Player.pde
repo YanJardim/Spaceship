@@ -15,12 +15,10 @@ class Player extends GameObject {
     	pushMatrix();
 			translate(position.x - scale.x / 2, position.y - scale.y / 2);
 			rotate(getAngle());
-			//triangle(0, 0, scale.x, 0, scale.x / 2, scale.y);
-      		//rect(-scale.x / 2, -scale.x/2, scale.x, scale.y);
-			imageMode(CENTER);
 			pushMatrix();
 				rotate(PI / 2);
-				image(image, 0, 0);
+				imageMode(CENTER);
+				drawImage(0, 0);
 			popMatrix();
     	popMatrix();
   	}

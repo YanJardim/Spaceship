@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 abstract class GameObject{
     protected PVector position;
     protected PVector direction;
@@ -5,6 +7,7 @@ abstract class GameObject{
     protected PVector rotation;
     protected PVector scale;
     protected PImage image;
+    protected Rectangle boudingBox;
     protected float speed;
     protected color c;
   
@@ -17,6 +20,7 @@ abstract class GameObject{
     public GameObject(PVector position, PVector rotation, PVector scale){
         this(position, rotation);
         this.scale = scale;
+        this.boudingBox = new Rectangle((int)(position.x - scale.x / 2) , (int)(position.y - scale.y / 2), (int)scale.x, (int)scale.y);
     }
     public GameObject(PVector position, PVector rotation, PVector scale, float speed){
         this(position, rotation, scale);
@@ -29,10 +33,26 @@ abstract class GameObject{
 
     public void draw(){
         update();
+        drawBoudingBox();
     }
-    public void update(){   
+    public void update(){
+        updateImage();   
     }
+    public void drawImage(){
+        if(image == null) return;
 
+        image(image, position.x, position.y, scale.x, scale.y);
+    }
+    public void updateImage(){
+        boudingBox.setLocation((int)(position.x - scale.x), (int)(position.y - scale.y));
+    }
+    public void drawBoudingBox(){
+        stroke(200, 0, 50);
+        rect((float)boudingBox.getX(), (float)boudingBox.getY(), (float)boudingBox.getWidth(), (float)boudingBox.getHeight());
+    }
+    public void drawImage(float x, float y){
+        image(image, x, y, scale.x, scale.y);
+    }
     public PVector getPosition(){
         return position; 
     }
