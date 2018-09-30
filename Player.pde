@@ -1,8 +1,8 @@
 class Player extends GameObject {
 	private float rotAngle;
 	private float rotSpeed = 5;
-  	public Player(String imageName, PVector position, PVector rotation, float speed) {
-    	super(imageName, position, rotation, new PVector(40, 40), speed);
+  	public Player(PVector position, PVector rotation, float speed) {
+    	super("player", position, rotation, new PVector(40, 40), speed);
 		c = color(255, 255, 255);
 		rotAngle = 0;
   	}
@@ -13,13 +13,15 @@ class Player extends GameObject {
     	noFill();
 	
     	pushMatrix();
-			translate(position.x - scale.x / 2, position.y - scale.y / 2);
+			translate(position.x , position.y );
 			rotate(getAngle());
+
 			pushMatrix();
 				rotate(PI / 2);
 				imageMode(CENTER);
 				drawImage(0, 0);
 			popMatrix();
+
     	popMatrix();
   	}
   	public float getAngle() {
@@ -31,7 +33,7 @@ class Player extends GameObject {
   	  	super.update();
   	  	applyRotation();
   	  	move();
-  	  	scroll();
+  	  	
   	}
   	public void limitVel(){
   	    constrain(direction.x, 0, 0.05);
@@ -59,8 +61,4 @@ class Player extends GameObject {
   	  	//propulsion.mult();
   	}
 
-  	public void scroll(){
-  		position.x = position.x <= -scale.x/2 ? width : position.x >= width ? 0 : position.x; 
-  	   	position.y = position.y <= -scale.y/2 ? height : position.y >= height ? 0 : position.y; 
-  	}
 }

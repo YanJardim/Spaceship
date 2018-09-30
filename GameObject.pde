@@ -36,23 +36,32 @@ abstract class GameObject{
         drawBoudingBox();
     }
     public void update(){
+        scroll();
         updateImage();   
     }
     public void drawImage(){
         if(image == null) return;
-
-        image(image, position.x, position.y, scale.x, scale.y);
+        imageMode(CENTER);
+        drawImage(position.x, position.y);
+    }
+    public void drawImage(float x, float y){
+        imageMode(CENTER);
+        image(image, x, y, scale.x, scale.y);
     }
     public void updateImage(){
-        boudingBox.setLocation((int)(position.x - scale.x), (int)(position.y - scale.y));
+        boudingBox.setLocation((int)(position.x - scale.x / 2), (int)(position.y - scale.y / 2));
     }
     public void drawBoudingBox(){
         stroke(200, 0, 50);
         rect((float)boudingBox.getX(), (float)boudingBox.getY(), (float)boudingBox.getWidth(), (float)boudingBox.getHeight());
     }
-    public void drawImage(float x, float y){
-        image(image, x, y, scale.x, scale.y);
-    }
+
+    public void scroll(){
+  		position.x = position.x <= -scale.x/2 ? width : position.x >= width ? 0 : position.x; 
+  	   	position.y = position.y <= -scale.y/2 ? height : position.y >= height ? 0 : position.y; 
+  	}
+
+    //GETTERS AND SETTERS
     public PVector getPosition(){
         return position; 
     }
