@@ -1,6 +1,8 @@
 class Player extends GameObject {
 	private float rotAngle;
 	private float rotSpeed = 5;
+	private boolean isLeft, isRight, isUp, isDown;
+
   	public Player(PVector position, PVector rotation, float speed) {
     	super("player", position, rotation, new PVector(40, 40), speed);
 		c = color(255, 255, 255);
@@ -45,20 +47,41 @@ class Player extends GameObject {
 	}
   	public void move() {
 	  	position.add(direction.add(propulsion.normalize()).normalize().mult(speed * time.deltatime()));
-		println("rot: "+ direction);
-  	  	if (keyPressed) {
-			if (key == 'w') {
-				propulsion = rotation.copy();
-			}
-			if (key == 'a') {
-				rotAngle -= time.deltatime() * rotSpeed;
-			}
-			if (key == 'd') {
-				rotAngle += time.deltatime() * rotSpeed;
-			}
-			
-  	  	}
+
+		if (isUp) {
+			propulsion = rotation.copy();
+		}
+		if (isLeft) {
+			rotAngle -= time.deltatime() * rotSpeed;
+		}
+		if (isRight) {
+			rotAngle += time.deltatime() * rotSpeed;
+		}
+
   	  	//propulsion.mult();
+  	}
+
+	boolean setMove(int key, boolean value) {
+		switch (key) {
+			case 'W':
+				case UP:
+					return isUp = value;
+	
+			case 'S':
+				case DOWN:
+					return isDown = value;
+	
+			case 'A':
+				case LEFT:
+					return isLeft = value;
+	
+			case 'D':
+				case RIGHT:
+					return isRight = value;
+	
+			default:
+				return value;
+		}
   	}
 
 }

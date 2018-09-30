@@ -1,7 +1,7 @@
 public class Meteor extends GameObject {
 
-    public Meteor (PVector position, PVector scale, float speed) {
-        super("meteor1-1", position, new PVector(0, 0), new PVector(40, 40), speed);
+    public Meteor (PVector position, PVector scale, float speed, int size) {
+        super("meteor1-1", position, new PVector(0, 0), new PVector(size, size), speed);
         direction = new PVector(random(0, 1), random(0, 1)).normalize();
     }
     @Override
