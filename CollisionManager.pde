@@ -13,6 +13,7 @@ class CollisionManager {
                 if (player.getBullets().get(j).checkCollision(e)) {
                     System.out.println("Colisão com Inimigo: " + i);
                     meteorSpawner.killMeteor(e);
+                    gameManager.addScore(10);
                     //System.out.println("Colisão com Inimigo: " + j);
                 }
             }

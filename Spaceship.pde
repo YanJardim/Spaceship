@@ -3,6 +3,8 @@ Time time;
 MeteorSpawner meteorSpawner;
 PImage bgImage;
 CollisionManager collisionManager;
+GameManager gameManager;
+PFont pixelFont;
 
 void setup() {
     size(800, 800);
@@ -10,7 +12,10 @@ void setup() {
     meteorSpawner = new MeteorSpawner(2);
     time = new Time();
     bgImage = loadImage("images/bg.png");
+    pixelFont = createFont("fonts/pixel.ttf", 32);
     collisionManager = new CollisionManager();
+    gameManager = new GameManager();
+   
 }
 
 void draw() {
@@ -21,6 +26,8 @@ void draw() {
     image(bgImage, width / 2, height / 2, width, height);
     
     collisionManager.checkCollision();
+    gameManager.draw();
+    
     meteorSpawner.update();
     meteorSpawner.draw();
     player.draw();
