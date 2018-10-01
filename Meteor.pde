@@ -1,8 +1,14 @@
 public class Meteor extends GameObject {
+    private int level;
+    private int maxLevel;
+    private int meteorIndex;
 
     public Meteor (int meteorIndex, PVector position, PVector scale, float speed, int size) {
         super(("meteor" + meteorIndex + "-1"), position, new PVector(0, 0), new PVector(size, size), speed);
-        direction = new PVector(random(-1, 1), random(-1, 1)).normalize();
+        setRandomDirection();
+        this.meteorIndex = meteorIndex;
+        maxLevel = 4;
+        level = 1;
     }
     @Override
         public void draw() {
@@ -14,5 +20,18 @@ public class Meteor extends GameObject {
         super.update();
         position.add(direction.copy().mult(speed * time.deltatime()));
         rotAngle += 5 * time.deltatime();
+    }
+
+    public void levelUp() {
+        if (level >= maxLevel) return;
+        level++;
+        image = loadImage("images/meteor" + meteorIndex + "-" + level + ".png");
+        scale.div(1.3);
+        setRandomDirection();
+        updateBoudingBox();
+    }
+
+    public void setRandomDirection() {
+        direction = new PVector(random(-1, 1), random(-1, 1)).normalize();
     }
 }

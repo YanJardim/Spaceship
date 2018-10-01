@@ -68,6 +68,9 @@ abstract class GameObject {
     public void updateImage() {
         boudingBox.setLocation((int)(position.x - scale.x / 2), (int)(position.y - scale.y / 2));
     }
+    public void updateBoudingBox(){
+        boudingBox = new Rectangle((int)(position.x - scale.x / 2), (int)(position.y - scale.y / 2), (int)scale.x, (int)scale.y);   
+    }
     public void drawBoudingBox() {
         stroke(200, 0, 50);
         rect((float)boudingBox.getX(), (float)boudingBox.getY(), (float)boudingBox.getWidth(), (float)boudingBox.getHeight());

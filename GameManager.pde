@@ -10,7 +10,7 @@ class GameManager {
         fill(255);
         textSize(30);
         textFont(pixelFont);
-        text("Score: " + score, 10, 30); 
+        text("SCORE: " + score, 10, 30); 
     }
     
     public void addScore(int amount){

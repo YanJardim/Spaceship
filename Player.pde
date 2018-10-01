@@ -103,4 +103,7 @@ class Player extends GameObject {
     public ArrayList<Bullet> getBullets(){
          return bullets;   
     }
+    public void removeBullet(Bullet b){
+         bullets.remove(b);   
+    }
 }
