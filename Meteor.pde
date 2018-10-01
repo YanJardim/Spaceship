@@ -32,6 +32,7 @@ public class Meteor extends GameObject {
         level++;
         image = loadImage("images/meteor" + meteorIndex + "-" + level + ".png");
         scale.div(1.3);
+        speed *= 1.2;
         setRandomDirection();
         updateBoudingBox();
     }

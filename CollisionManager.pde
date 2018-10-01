@@ -14,6 +14,7 @@ class CollisionManager {
                     player.removeBullet(player.getBullets().get(j));
                     if (e.isDead()) {
                         meteorSpawner.killMeteor(e);
+                         gameManager.addScore(10 * e.getLevel() * 2);
                     } else {
                         e.levelUp();
                         gameManager.addScore(10 * e.getLevel());
