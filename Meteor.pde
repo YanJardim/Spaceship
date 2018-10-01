@@ -5,15 +5,14 @@ public class Meteor extends GameObject {
         direction = new PVector(random(-1, 1), random(-1, 1)).normalize();
     }
     @Override
-    public void draw(){
+        public void draw() {
         super.draw();
         drawImage();
     }
     @Override
-    public void update(){
+        public void update() {
         super.update();
         position.add(direction.copy().mult(speed * time.deltatime()));
         rotAngle += 5 * time.deltatime();
     }
-
 }
