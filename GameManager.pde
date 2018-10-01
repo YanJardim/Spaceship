@@ -14,7 +14,7 @@ class GameManager {
     }
     
     public void addScore(int amount){
-         score += amount;   
+         score += amount;
     }
 
     
