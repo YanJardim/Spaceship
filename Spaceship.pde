@@ -2,6 +2,7 @@ Player player;
 Time time;
 MeteorSpawner meteorSpawner;
 PImage bgImage;
+CollisionManager collisionManager;
 
 void setup() {
     size(800, 800);
@@ -9,6 +10,7 @@ void setup() {
     meteorSpawner = new MeteorSpawner(2);
     time = new Time();
     bgImage = loadImage("images/bg.png");
+    collisionManager = new CollisionManager();
 }
 
 void draw() {
@@ -18,7 +20,7 @@ void draw() {
 
     image(bgImage, width / 2, height / 2, width, height);
     
-    collision();
+    collisionManager.checkCollision();
     meteorSpawner.update();
     meteorSpawner.draw();
     player.draw();
@@ -32,18 +34,4 @@ void keyPressed() {
 
 void keyReleased() {
     player.setMove(keyCode, false);
-}
-
-void collision() {
-    for (int i=0; i<meteorSpawner.getMeteors().size(); ++i) {
-        Meteor e = meteorSpawner.getMeteors().get(i);
-        for (int j=0; j<player.getBullets().size(); ++j)
-        {
-            if (player.getBullets().get(j).checkCollision(e)) {
-                System.out.println("Colisão com Inimigo: " + i);
-                meteorSpawner.killMeteor(e);
-                //System.out.println("Colisão com Inimigo: " + j);
-            }
-        }
-    }
 }
