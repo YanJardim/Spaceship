@@ -11,11 +11,17 @@ class GameManager {
         textSize(30);
         textFont(pixelFont);
         text("SCORE: " + score, 10, 30); 
-        text("HP: " + player.getHealth(), 10, 60); 
+        text("HP: " + player.getHealth(), 10, 60);
+        if(keyPressed && key == '+'){
+            addScore(10);
+        }
     }
     
     public void addScore(int amount){
          score += amount;
+    }
+    public int getScore(){
+         return score;   
     }
 
     

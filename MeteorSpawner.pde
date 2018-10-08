@@ -11,6 +11,7 @@ public class MeteorSpawner {
     }
 
     public void draw() {
+        update();
         drawEnemies();
     }
     public void update() {
@@ -29,13 +30,18 @@ public class MeteorSpawner {
         PVector pos = getRandomPosition();
         int r = (int)random(1, 4);
 
-        meteors.add(new Meteor(r, pos, new PVector(1, 0), (int)random(60, 100), (int)random(40, 80)));
+        meteors.add(new Meteor(r, pos, new PVector(1, 0), (int)random(getParameter(20), getParameter(40)), (int)random(40, 80)));
     }
 
     public ArrayList<Meteor> getMeteors() {
         return meteors;
     }    
-
+    public float getParameter(float number){
+        float result = number * ((pow(gameManager.getScore(), 2) / 1000) / 20000  + 1);
+        result = constrain(result, 0, 160);
+        println(result);
+        return result;
+    }
     public void drawEnemies() {
         for (Meteor m : meteors) {
             m.draw();
