@@ -14,13 +14,18 @@ class CollisionManager {
                     player.removeBullet(player.getBullets().get(j));
                     if (e.isDead()) {
                         meteorSpawner.killMeteor(e);
-                         gameManager.addScore(10 * e.getLevel() * 2);
+                        gameManager.addScore(10 * e.getLevel() * 2);
                     } else {
                         e.levelUp();
                         gameManager.addScore(10 * e.getLevel());
                     }
-                    
                 }
+            }
+        }
+        for (int i=0; i<meteorSpawner.getMeteors().size(); ++i) {
+            Meteor e = meteorSpawner.getMeteors().get(i);
+            if (player.checkCollision(e)) {
+                player.takeDamage();
             }
         }
     }

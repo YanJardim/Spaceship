@@ -2,8 +2,9 @@ class Player extends GameObject {
 
     private boolean isLeft, isRight, isUp, isDown, isSpace;
     private ArrayList<Bullet> bullets;
-    private boolean canShoot;
-    private float fireRatio, shootTimer;
+    private boolean canShoot, isInvunerable;
+    private float fireRatio, shootTimer, invTimer, invMaxTime;
+    private int health;
 
     public Player(PVector position, PVector rotation, float speed) {
         super("player", position, rotation, new PVector(40, 40), speed);
@@ -11,21 +12,26 @@ class Player extends GameObject {
         rotAngle = 0;
         bullets = new ArrayList<Bullet>();
         fireRatio = 0.2;
+        health = 3;
+        isInvunerable = false;
+        invMaxTime = 1.5;
     }
     @Override
-    public void draw() {
+        public void draw() {
         super.draw();
 
         drawBullets();
+        tint(c);
         drawWithRotation();
     }
 
     @Override
-    public void update() {
+        public void update() {
         super.update();
         move();
         shoot();
         applyRotation();
+        invunerable();
     }
 
     private void drawPlayer() {
@@ -49,7 +55,17 @@ class Player extends GameObject {
         }
         //propulsion.mult();
     }
+    public void invunerable() {
 
+        if (invTimer <= invMaxTime && isInvunerable) {
+            invTimer += time.deltatime();
+            
+        } else if (isInvunerable) {
+            isInvunerable = false;
+            invTimer = 0;
+            c = color(255);
+        }
+    }
     public void shoot() {
         if (isSpace && canShoot) {
             bullets.add(new Bullet(position.copy(), rotation.copy(), 200, 3));
@@ -99,11 +115,25 @@ class Player extends GameObject {
             b.draw();
         }
     }
-    
-    public ArrayList<Bullet> getBullets(){
-         return bullets;   
+
+    public void takeDamage() {
+        if(isInvunerable) return;
+        health--;
+        isInvunerable = true;
+        c = color(255, 0, 0);
     }
-    public void removeBullet(Bullet b){
-         bullets.remove(b);   
+    public boolean isDead() {
+        return health <= 0;
+    }
+    public int getHealth(){
+         return health;   
+    }
+    
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+    public void removeBullet(Bullet b) {
+        bullets.remove(b);
     }
 }

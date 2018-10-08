@@ -8,21 +8,19 @@ public class Bullet extends GameObject {
     }
 
     @Override
-    public void update(){
+    public void update() {
         super.update();
         timer += time.deltatime();
         position.add(rotation.copy().normalize().mult(speed * time.deltatime()));
-        
     }
     @Override
-    public void draw(){
+    public void draw() {
         super.draw();
-        
-		drawWithRotation();
+
+        drawWithRotation();
     }
 
-    public boolean isDead(){
+    public boolean isDead() {
         return timer >= lifeTime;
     }
-
 }

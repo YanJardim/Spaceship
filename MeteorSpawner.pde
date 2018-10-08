@@ -1,9 +1,11 @@
 public class MeteorSpawner {
     private float spawnRatio, timer;
     private ArrayList<Meteor> meteors;
+    private int maxMeteors;
 
-    public MeteorSpawner (float spawnRatio) {
+    public MeteorSpawner (float spawnRatio, int maxMeteors) {
         this.spawnRatio = spawnRatio;
+        this.maxMeteors = maxMeteors;
         meteors = new ArrayList<Meteor>();
         spawnMeteor();
     }
@@ -13,7 +15,7 @@ public class MeteorSpawner {
     }
     public void update() {
         countTime();
-        if (timer >= spawnRatio) {
+        if (timer >= spawnRatio && meteors.size() < maxMeteors) {
             spawnMeteor();
             timer = 0;
         }
@@ -29,8 +31,8 @@ public class MeteorSpawner {
 
         meteors.add(new Meteor(r, pos, new PVector(1, 0), (int)random(60, 100), (int)random(40, 80)));
     }
-    
-    public ArrayList<Meteor> getMeteors(){
+
+    public ArrayList<Meteor> getMeteors() {
         return meteors;
     }    
 
@@ -39,11 +41,11 @@ public class MeteorSpawner {
             m.draw();
         }
     }
-    
-    public void killMeteor(Meteor m){
+
+    public void killMeteor(Meteor m) {
         meteors.remove(m);
     }
-    
+
     public PVector getRandomPosition() {
         int r = (int)floor(random(0, 4));
         switch (r) {
